@@ -29,6 +29,21 @@ router.findAllPlayers = (req, res) => {
     });
 }
 
+router.findOnePlayer = (req, res) => {
+
+    res.setHeader('Content-Type', 'application/json');
+
+    Player.find({ "_id" : req.params.id },function(err, player) {
+        if (err) {
+            // return a suitable error message
+            res.send(JSON.stringify(err, null, 5));
+        }
+        else {
+            res.send(JSON.stringify(player, null, 5));
+        }
+    });
+}
+
 router.addPlayer = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
@@ -41,12 +56,24 @@ router.addPlayer = (req, res) => {
     player.save(function(err) {
         if (err) {
             // return a suitable error message
-            res.json('Could not add donation');
+            res.json('Could not add player');
         }
         else {
             // return a suitable success message
             res.json({ message: 'Player added', data: player});
         }
+    });
+}
+
+router.deletePlayer = (req, res) => {
+
+    Player.findByIdAndRemove(req.params.id, function(err) {
+        if (err)
+        {
+            res.json('player delete failed');
+        }
+        else
+            res.json('player deletion was succesfull');
     });
 }
 

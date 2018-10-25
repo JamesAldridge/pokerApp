@@ -29,9 +29,14 @@ app.use('/users', usersRouter);
 
 //GET Routes
 app.get('/players', player.findAllPlayers);
+app.get('/players/:id', player.findOnePlayer);
+
 
 //POST Routes
 app.post('/players', player.addPlayer);
+
+//DELETE Routes
+app.delete('/players/:id/delete',player.deletePlayer);
 
 
 // catch 404 and forward to error handler
