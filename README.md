@@ -42,7 +42,7 @@ $ npm run test
 
 ## Deployment
 
-Heroku
+Deployed to Heroku http://pokerwebapp.herokuapp.com/
 
 ## References/Resources used
 
