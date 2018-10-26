@@ -31,9 +31,12 @@ app.use('/users', usersRouter);
 app.get('/players', player.findAllPlayers);
 app.get('/players/:id', player.findOnePlayer);
 
-
 //POST Routes
 app.post('/players', player.addPlayer);
+
+//PUT Routes
+app.put('/players/:id/tournament', player.addTournamentToPlayer);
+
 
 //DELETE Routes
 app.delete('/players/:id/delete',player.deletePlayer);

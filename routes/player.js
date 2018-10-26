@@ -4,6 +4,8 @@ let mongoose = require('mongoose');
 const credentials = require('../credentials');
 
 let Player = require('../models/player');
+let Tournament = require('../models/tournament');
+
 
 mongoose.connect(credentials.mongodbUri);
 
@@ -50,8 +52,8 @@ router.addPlayer = (req, res) => {
 
     var player = new Player();
 
-    player.name = req.body.name// the requested value
-    player.netwinnings = req.body.amount// the requested value
+    player.pokerAlias = req.body.pokerAlias// the requested value
+    player.winnings = req.body.winnings// the requested value
 
     player.save(function(err) {
         if (err) {
@@ -64,6 +66,39 @@ router.addPlayer = (req, res) => {
         }
     });
 }
+
+router.addTournamentToPlayer = (req, res) => {
+
+    Player.findById(req.params.id, function (err, player) {
+        if (err) {
+            res.json({message: 'Player not found'});
+        }
+        else {
+            let tournament = new Tournament();
+
+            tournament.name = req.body.name
+            tournament.ranking = req.body.ranking
+            tournament.entries = req.body.ranking
+            tournament.buyIn = req.body.buyIn
+            tournament.winnings = req.body.winnings
+
+            player.winnings += tournament.winnings; // increase the players winnings to account for the new tournament added
+            player.tournaments.push(tournament);
+
+            player.save(function(err) {
+                if (err) {
+                    // return a suitable error message
+                    res.json('Could not add player');
+                }
+                else {
+                    // return a suitable success message
+                    res.json({ message: 'Tournament added', data: tournament});
+                }
+            });
+        }
+    });
+}
+
 
 router.deletePlayer = (req, res) => {
 

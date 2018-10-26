@@ -1,9 +1,11 @@
 let mongoose = require('mongoose');
+let TournamentSchema = ('tournament');
 
 let PlayerSchema = new mongoose.Schema({
         pokerAlias: String,
-        winnings: Number,
+        winnings: {type: Number, default: 0},
+        tournaments: [TournamentSchema]
     },
-    { collection: 'pokerdb' });
+    { collection: 'newtestdb' });
 
 module.exports = mongoose.model('Player', PlayerSchema);
