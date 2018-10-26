@@ -6,6 +6,6 @@ let PlayerSchema = new mongoose.Schema({
         winnings: {type: Number, default: 0},
         tournaments: [TournamentSchema]
     },
-    { collection: 'newtestdb' });
+    { collection: 'pokerdb' });
 
 module.exports = mongoose.model('Player', PlayerSchema);
