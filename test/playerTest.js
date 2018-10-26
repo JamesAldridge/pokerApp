@@ -1,12 +1,11 @@
 const Player = require ('../models/player'),
-    playerRouter = require('../routes/player'),
-    router = express.Router();
     assert = require('assert');
 
 describe('Player', () => {
     testPlayer = new Player({
         pokerAlias: 'JohnSmith85'
     });
+
 
     describe('saving', () => {
 
@@ -24,10 +23,6 @@ describe('Player', () => {
         it('player is assigned correct default values', () => {
             assert(testPlayer.pokerAlias === 'JohnSmith85');
             assert(testPlayer.winnings === 0);
-        });
-
-        it('player tournaments updates succesfully', () => {
-            //need to mock http request
         });
     });
 });

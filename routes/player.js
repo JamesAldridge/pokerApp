@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-const credentials = require('../credentials');
+const credentials = require('../config/credentials');
 
 let Player = require('../models/player');
 let Tournament = require('../models/tournament');
@@ -54,17 +54,23 @@ router.addPlayer = (req, res) => {
 
     player.pokerAlias = req.body.pokerAlias// the requested value
     player.winnings = req.body.winnings// the requested value
+    if(player.pokerAlias) {
+        player.save(function (err) {
+            if (err) {
+                // return a suitable error message
+                res.json('Could not add player');
+            }
+            else {
+                // return a suitable success message
+                res.json({message: 'Player added', data: player});
+            }
+        });
+    }
+    else
+    {
+        res.json('Could not add player as no alias was given');
 
-    player.save(function(err) {
-        if (err) {
-            // return a suitable error message
-            res.json('Could not add player');
-        }
-        else {
-            // return a suitable success message
-            res.json({ message: 'Player added', data: player});
-        }
-    });
+    }
 }
 
 router.addTournamentToPlayer = (req, res) => {
